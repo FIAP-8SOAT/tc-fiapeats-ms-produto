@@ -8,7 +8,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import io.cucumber.spring.CucumberContextConfiguration;
 
-
 import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 
 @Suite  // NOSONAR
@@ -18,7 +17,6 @@ import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "br.com.fiap.fiapeats.unitTests.bdd")
 public class RunCucumberTest {
-
     @LocalServerPort
     private static int port;
     @BeforeAll
