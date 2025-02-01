@@ -321,7 +321,6 @@ jobs:
           echo "Imagem: $IMAGE_REPO:$VERSION"
           docker pull "${IMAGE_REPO}:${VERSION}"
 
-
       - name: Substituir a versão da imagem no deployment.yaml
         run: |
           IMAGE_REPO="980921733871.dkr.ecr.us-east-1.amazonaws.com/fiapeats-api"
