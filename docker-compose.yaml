@@ -54,9 +54,13 @@ services:
     env_file: "variables/ambient.env"
     networks:
       - net-postgres-ms-produto
+      - fiapeats-all-ms-network
 
 networks:
   net-postgres-ms-produto:
+    driver: bridge
+  fiapeats-all-ms-network:
+    name: fiapeats-all-ms-network
     driver: bridge
 
 volumes:
