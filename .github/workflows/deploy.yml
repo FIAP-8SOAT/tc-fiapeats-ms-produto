@@ -116,7 +116,7 @@ jobs:
           echo "JDK configurado em: ${{ needs.setup-jdk.outputs.jdk-path }}"
 
       - name: Executar testes de sistema (Cucumber)
-        run: mvn verify -Psystem-test
+        run: mvn clean test -Dtest=RunCucumberTest
 
   performance-tests:
     needs: compile
