@@ -22,7 +22,7 @@
 			**/RunCucumberTest.java, <!-- Exclui o cucumber do Sonar -->
 			**/ProdutoSteps.java <!-- Exclui o cucumber do Sonar -->
 		</sonar.exclusions>
-		<sonar.projectKey>fabriciofsousa_tc-fiapeats-ms-produto-test</sonar.projectKey>
+		<sonar.projectKey>FIAP-8SOAT_tc-fiapeats-ms-produto</sonar.projectKey>
 		<sonar.organization>fiap-8soat</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
