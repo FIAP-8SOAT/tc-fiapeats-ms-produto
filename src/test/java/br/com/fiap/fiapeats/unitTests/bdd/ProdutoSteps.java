@@ -2,12 +2,18 @@ package br.com.fiap.fiapeats.unitTests.bdd;
 
 import br.com.fiap.fiapeats.external.api.contracts.request.CriarProdutoRequest;
 import br.com.fiap.fiapeats.external.api.contracts.request.EditarProdutoRequest;
+import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -16,16 +22,28 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(locations = "classpath:application-test.properties")
+@Sql(scripts = {"/sqlTest.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class ProdutoSteps {
+
+    @Value("${local.server.port}")
+    private int port;
 
     private CriarProdutoRequest criarProdutoRequest;
     private EditarProdutoRequest editarProdutoRequest;
     private UUID produtoId;
     private Response response;
 
+    @Before
+    public void setUp() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
+    }
+
     @Dado("que eu tenho os dados de um novo produto")
     public void queEuTenhoOsDadosDeUmNovoProduto() {
-        criarProdutoRequest = new CriarProdutoRequest("Refrigerante", "Lata 350ml", new BigDecimal("5.99"), "Bebida", "http://imagem.com/img.png");
+        criarProdutoRequest = new CriarProdutoRequest("Refrigerante", "Lata 350ml", new BigDecimal("5.99"), "Drink", "http://imagem.com/img.png");
     }
 
     @Dado("que eu tenho os dados de um novo produto com categoria inválida")
@@ -40,7 +58,7 @@ public class ProdutoSteps {
 
     @Dado("que eu tenho os dados atualizados de um produto existente")
     public void queEuTenhoOsDadosAtualizadosDeUmProdutoExistente() {
-        criarProdutoRequest = new CriarProdutoRequest("Refrigerante editado", "Lata 350ml editado", new BigDecimal("95.99"), "Bebida", "http://imagemEditada.com/img.png");
+        criarProdutoRequest = new CriarProdutoRequest("Refrigerante editado", "Lata 350ml editado", new BigDecimal("95.99"), "Drink", "http://imagemEditada.com/img.png");
         String id = given()
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
@@ -50,7 +68,7 @@ public class ProdutoSteps {
 
         produtoId = UUID.fromString(id);
 
-        editarProdutoRequest = new EditarProdutoRequest("Refrigerante Atualizado", "Lata 500ml", new BigDecimal("6.99"), "Bebida", "http://imagem.com/updated.png");
+        editarProdutoRequest = new EditarProdutoRequest("Refrigerante Atualizado", "Lata 500ml", new BigDecimal("6.99"), "Drink", "http://imagem.com/updated.png");
     }
 
     @Dado("que eu tenho os dados atualizados de um produto inexistente")
@@ -61,7 +79,7 @@ public class ProdutoSteps {
 
     @Dado("que eu tenho o ID de um produto existente")
     public void queEuTenhoOIDDeUmProdutoExistente() {
-        criarProdutoRequest = new CriarProdutoRequest("Refrigerante", "Lata 350ml", new BigDecimal("5.99"), "Bebida", "http://imagem.com/img.png");
+        criarProdutoRequest = new CriarProdutoRequest("Refrigerante", "Lata 350ml", new BigDecimal("5.99"), "Drink", "http://imagem.com/img.png");
         String id = given()
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
@@ -152,7 +170,7 @@ public class ProdutoSteps {
     public void euEnvioUmaSolicitacaoParaListarProdutosPorCategoria() {
         response = given()
                 .when()
-                .get("/fiapeats/produto/categoria/Bebida");
+                .get("/fiapeats/produto/categoria/Drink");
     }
 
     @Então("o produto deve ser criado com sucesso")
@@ -241,4 +259,5 @@ public class ProdutoSteps {
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("mensagem", equalTo("Produto não encontrado"));
     }
+
 }

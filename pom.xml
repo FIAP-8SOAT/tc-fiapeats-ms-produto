@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>fiapeats-Produtos</artifactId>
-	<version>1.0.25</version>
+	<version>1.0.26</version>
 	<name>Produtos</name>
 	<description>Microsservice do fiapeats para Gestão de produtos</description>
 	<properties>
@@ -327,10 +327,9 @@
 						<version>3.1.2</version>
 						<configuration>
 							<includes combine.self="override">
-								<include>**/CucumberTest.java</include>
+								<include>**/RunCucumberTest.java</include>
 							</includes>
-							<excludes combine.self="override">
-							</excludes>
+
 							<properties>
 								<configurationParameters>
 									cucumber.junit-platform.naming-strategy=long
