@@ -133,8 +133,7 @@ jobs:
       - name: Rodar Testes de Performance com Maven
         continue-on-error: true
         run: |
-          mvn gatling:test -Pperformance-test   
-
+          mvn gatling:test -Pperformance-test
   sonarqube:
     runs-on: ubuntu-latest
     #needs: [ unit-tests, integration-tests, system-tests, performance-tests ]
