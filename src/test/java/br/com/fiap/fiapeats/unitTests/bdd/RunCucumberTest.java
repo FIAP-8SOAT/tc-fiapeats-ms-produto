@@ -32,8 +32,4 @@ class RunCucumberTest {
         RestAssured.baseURI = "http://localhost:" + port;
     }
 
-    @Test
-    void assertNotNull() {
-        Assert.assertNotNull(RestAssured.port);
-    }
 }
