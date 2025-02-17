@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.Sql;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @Sql(scripts = {"/sqlTest.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class ProdutoSpringControllerIT {
+class ProdutoSpringControllerIT {
 
     @LocalServerPort
     private int port;
@@ -35,7 +35,7 @@ public class ProdutoSpringControllerIT {
     private JdbcTemplate jdbcTemplate;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         RestAssured.port = port;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }

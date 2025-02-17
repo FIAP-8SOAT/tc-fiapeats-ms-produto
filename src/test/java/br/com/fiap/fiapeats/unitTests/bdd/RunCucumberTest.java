@@ -1,6 +1,8 @@
 package br.com.fiap.fiapeats.unitTests.bdd;
 
 import io.restassured.RestAssured;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.platform.suite.api.*;
@@ -20,13 +22,18 @@ import static io.cucumber.core.options.Constants.GLUE_PROPERTY_NAME;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "br.com.fiap.fiapeats.unitTests.bdd")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Sql(scripts = {"/sqlTest.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class RunCucumberTest {
+class RunCucumberTest {
 
     @LocalServerPort
     private int port;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
+    }
+
+    @Test
+    void assertNotNull() {
+        Assert.assertNotNull(RestAssured.port);
     }
 }
