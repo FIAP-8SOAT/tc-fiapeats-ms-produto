@@ -168,7 +168,8 @@ jobs:
           -Dsonar.pullrequest.key="" \
           -Dsonar.pullrequest.branch="" \
           -Dsonar.pullrequest.base="" \
-          -Dsonar.branch.name=${{ github.ref_name }}
+          -Dsonar.branch.name=main
+
   verify-aws:
     needs: sonarqube
     runs-on: ubuntu-latest
