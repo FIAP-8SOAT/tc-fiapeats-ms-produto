@@ -133,8 +133,7 @@ jobs:
       - name: Rodar Testes de Performance com Maven
         continue-on-error: true
         run: |
-          mvn gatling:test -Pperformance-test   
-
+          mvn gatling:test -Pperformance-test
   sonarqube:
     runs-on: ubuntu-latest
     #needs: [ unit-tests, integration-tests, system-tests, performance-tests ]
@@ -162,9 +161,8 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=FIAP-8SOAT_tc-fiapeats-ms-produto \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=fiap-8soat_tc-fiapeats-ms-produto
+
   verify-aws:
     needs: sonarqube
     runs-on: ubuntu-latest
