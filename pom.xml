@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>fiapeats-Produtos</artifactId>
-	<version>1.0.25</version>
+	<version>1.0.27</version>
 	<name>Produtos</name>
 	<description>Microsservice do fiapeats para Gestão de produtos</description>
 	<properties>
@@ -22,7 +22,6 @@
 			**/RunCucumberTest.java, <!-- Exclui o cucumber do Sonar -->
 			**/ProdutoSteps.java <!-- Exclui o cucumber do Sonar -->
 		</sonar.exclusions>
-		<sonar.projectKey>fabriciofsousa_tc-fiapeats-ms-produto-test</sonar.projectKey>
 		<sonar.organization>fiap-8soat</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
@@ -326,10 +325,9 @@
 						<version>3.1.2</version>
 						<configuration>
 							<includes combine.self="override">
-								<include>**/CucumberTest.java</include>
+								<include>**/RunCucumberTest.java</include>
 							</includes>
-							<excludes combine.self="override">
-							</excludes>
+
 							<properties>
 								<configurationParameters>
 									cucumber.junit-platform.naming-strategy=long
