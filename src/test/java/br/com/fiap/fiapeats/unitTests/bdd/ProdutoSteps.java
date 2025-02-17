@@ -63,7 +63,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
                 .when()
-                .post("/fiapeats/produto")
+                .post("/msproduto/produto")
                 .then().extract().path("id");
 
         produtoId = UUID.fromString(id);
@@ -84,7 +84,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
                 .when()
-                .post("/fiapeats/produto")
+                .post("/msproduto/produto")
                 .then().extract().path("id");
 
         produtoId = UUID.fromString(id);
@@ -106,7 +106,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
                 .when()
-                .post("/fiapeats/produto");
+                .post("/msproduto/produto");
     }
 
     @Quando("eu envio uma solicitação para criar o produto com categoria inválida")
@@ -115,7 +115,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
                 .when()
-                .post("/fiapeats/produto");
+                .post("/msproduto/produto");
     }
 
     @Quando("eu envio uma solicitação para criar o produto com erro de validação")
@@ -124,7 +124,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(criarProdutoRequest)
                 .when()
-                .post("/fiapeats/produto");
+                .post("/msproduto/produto");
     }
 
     @Quando("eu envio uma solicitação para editar o produto")
@@ -133,7 +133,7 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(editarProdutoRequest)
                 .when()
-                .put("/fiapeats/produto/" + produtoId);
+                .put("/msproduto/produto/" + produtoId);
     }
 
     @Quando("eu envio uma solicitação para editar o produto inexistente")
@@ -142,35 +142,35 @@ public class ProdutoSteps {
                 .contentType(ContentType.JSON)
                 .body(editarProdutoRequest)
                 .when()
-                .put("/fiapeats/produto/" + produtoId);
+                .put("/msproduto/produto/" + produtoId);
     }
 
     @Quando("eu envio uma solicitação para remover o produto")
     public void euEnvioUmaSolicitacaoParaRemoverOProduto() {
         response = given()
                 .when()
-                .delete("/fiapeats/produto/" + produtoId);
+                .delete("/msproduto/produto/" + produtoId);
     }
 
     @Quando("eu envio uma solicitação para remover o produto inexistente")
     public void euEnvioUmaSolicitacaoParaRemoverOProdutoInexistente() {
         response = given()
                 .when()
-                .delete("/fiapeats/produto/" + produtoId);
+                .delete("/msproduto/produto/" + produtoId);
     }
 
     @Quando("eu envio uma solicitação para listar todos os produtos")
     public void euEnvioUmaSolicitacaoParaListarTodosOsProdutos() {
         response = given()
                 .when()
-                .get("/fiapeats/produto");
+                .get("/msproduto/produto");
     }
 
     @Quando("eu envio uma solicitação para listar produtos por categoria")
     public void euEnvioUmaSolicitacaoParaListarProdutosPorCategoria() {
         response = given()
                 .when()
-                .get("/fiapeats/produto/categoria/Drink");
+                .get("/msproduto/produto/categoria/Bebida");
     }
 
     @Então("o produto deve ser criado com sucesso")

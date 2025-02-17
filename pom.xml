@@ -72,7 +72,6 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<scope>default</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

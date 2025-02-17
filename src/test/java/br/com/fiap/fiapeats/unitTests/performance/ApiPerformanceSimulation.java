@@ -18,13 +18,13 @@ public class ApiPerformanceSimulation extends Simulation {
             .header("Content-Type", "application/json");
 
     ActionBuilder criarProdutoRequest = http("Criar Produto")
-            .post("/fiapeats/produto")
+            .post("/msproduto/produto")
             .body(StringBody("{ \"nome\": \"Refrigerante\", \"descricao\": \"Lata 350ml\", \"valor\": 5.99, \"categoria\": \"Bebida\", \"imagemUrl\": \"http://imagem.com/img.png\" }"))
             .check(status().is(201))
             .check(jsonPath("$.id").saveAs("produtoId"));
 
     ActionBuilder listarProdutosRequest = http("Listar Produtos")
-            .get("/fiapeats/produto")
+            .get("/msproduto/produto")
             .check(status().is(200));
 
     ScenarioBuilder cenarioCriarProduto = scenario("Criar Produto")
