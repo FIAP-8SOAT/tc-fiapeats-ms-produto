@@ -123,4 +123,55 @@ class EditarProdutoRequestTest {
 
     assertThat(violations).isNotEmpty();
   }
+
+  @Test
+  void testGettersAndSetters() {
+    EditarProdutoRequest request = new EditarProdutoRequest();
+    request.setNome("Refrigerante Guaraná");
+    request.setDescricao("Refrigerante lata 350ml");
+    request.setValor(new BigDecimal("7.99"));
+    request.setCategoria("Bebida");
+    request.setImagemUrl("https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png");
+
+    assertThat(request.getNome()).isEqualTo("Refrigerante Guaraná");
+    assertThat(request.getDescricao()).isEqualTo("Refrigerante lata 350ml");
+    assertThat(request.getValor()).isEqualTo(new BigDecimal("7.99"));
+    assertThat(request.getCategoria()).isEqualTo("Bebida");
+    assertThat(request.getImagemUrl()).isEqualTo("https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png");
+  }
+
+  @Test
+  void testEqualsAndHashCode() {
+    EditarProdutoRequest request1 = EditarProdutoRequest.builder()
+            .nome("Refrigerante Guaraná")
+            .descricao("Refrigerante lata 350ml")
+            .valor(new BigDecimal("7.99"))
+            .categoria("Bebida")
+            .imagemUrl("https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png")
+            .build();
+
+    EditarProdutoRequest request2 = EditarProdutoRequest.builder()
+            .nome("Refrigerante Guaraná")
+            .descricao("Refrigerante lata 350ml")
+            .valor(new BigDecimal("7.99"))
+            .categoria("Bebida")
+            .imagemUrl("https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png")
+            .build();
+
+    assertThat(request1).isEqualTo(request2).hasSameHashCodeAs(request2);
+  }
+
+  @Test
+  void testToString() {
+    EditarProdutoRequest request = EditarProdutoRequest.builder()
+            .nome("Refrigerante Guaraná")
+            .descricao("Refrigerante lata 350ml")
+            .valor(new BigDecimal("7.99"))
+            .categoria("Bebida")
+            .imagemUrl("https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png")
+            .build();
+
+    String expectedToString = "EditarProdutoRequest(nome=Refrigerante Guaraná, descricao=Refrigerante lata 350ml, valor=7.99, categoria=Bebida, imagemUrl=https://dcdn.mitiendanube.com/stores/001/043/122/products/guarana-350-ml1-36b27837866444073815698470135434-640-0.png)";
+    assertThat(request).hasToString(expectedToString);
+  }
 }

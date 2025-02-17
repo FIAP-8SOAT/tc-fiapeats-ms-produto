@@ -75,4 +75,45 @@ class ErrorResponseTest {
       assertThat(erroResponse.getCodigo()).isEqualTo("CodigoErro");
       assertThat(erroResponse.getMensagem()).isEqualTo("Mensagem de erro");
     }
+
+  @Test
+  void testGettersAndSetters() {
+    ErroResponse response = new ErroResponse();
+    response.setTipo("Erro de Validação");
+    response.setCodigo("400");
+    response.setMensagem("Campo obrigatório não informado");
+
+    assertThat(response.getTipo()).isEqualTo("Erro de Validação");
+    assertThat(response.getCodigo()).isEqualTo("400");
+    assertThat(response.getMensagem()).isEqualTo("Campo obrigatório não informado");
+  }
+
+  @Test
+  void testEqualsAndHashCode() {
+    ErroResponse response1 = ErroResponse.builder()
+            .tipo("Erro de Validação")
+            .codigo("400")
+            .mensagem("Campo obrigatório não informado")
+            .build();
+
+    ErroResponse response2 = ErroResponse.builder()
+            .tipo("Erro de Validação")
+            .codigo("400")
+            .mensagem("Campo obrigatório não informado")
+            .build();
+
+    assertThat(response1).isEqualTo(response2).hasSameHashCodeAs(response2);
+  }
+
+  @Test
+  void testToString() {
+    ErroResponse response = ErroResponse.builder()
+            .tipo("Erro de Validação")
+            .codigo("400")
+            .mensagem("Campo obrigatório não informado")
+            .build();
+
+    String expectedToString = "ErroResponse(tipo=Erro de Validação, codigo=400, mensagem=Campo obrigatório não informado)";
+    assertThat(response).hasToString(expectedToString);
+  }
   }
