@@ -1,4 +1,4 @@
-# FiapEats - Microserviço de Produtos
+# FiapEats - Microserviço de Produtos 
 
 Este repositório contém o microserviço de produtos do FiapEats, uma aplicação que gerencia o cadastro, consulta, edição e exclusão de produtos. Este serviço foi refatorado a partir de um monolito para operar de forma independente, seguindo boas práticas de arquitetura de microserviços.
 
