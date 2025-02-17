@@ -19,8 +19,17 @@ Este repositório contém o microserviço de produtos do FiapEats, uma aplicaç�
 
 
 ---
+## Testes
+- SonarQube: https://sonarcloud.io/summary/overall?id=fiap-8soat_tc-fiapeats-ms-produto&branch=main
+- Evidencias de testes:
+  ![image](https://github.com/user-attachments/assets/f7568edd-a8a5-42ec-ae6c-3eb61da4b02f)
+
+Sonar:
+![image](https://github.com/user-attachments/assets/420763bd-6d7f-487d-90f8-3942dfc989cc)
+
+
+---
 ## Ambiente Docker
-![Ambiente Docker](docs/docker_logo.png)
 
 Foi criado o arquivo na raiz docker-compose.yaml que contempla os 3 itens necessários para compor o ambiente completo de nosso sistema, sendo eles:
 - Postgress: imagem do banco de dados usado no projeto
