@@ -80,7 +80,7 @@ jobs:
           echo "JDK configurado em: ${{ needs.setup-jdk.outputs.jdk-path }}"
 
       - name: Executar testes unitários
-        run: mvn test -P!integration-test -P!system-test -P!performance-test
+        run: mvn test -Dtest=*Test,!*IT,!RunCucumberTest
 
       - name: Gerar link do relatório de testes unitários
         run: |
@@ -117,7 +117,6 @@ jobs:
 
       - name: Executar testes de sistema (Cucumber)
         run: mvn clean test -Dtest=RunCucumberTest
-
   performance-tests:
     needs: compile
     runs-on: ubuntu-latest
@@ -165,7 +164,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=FIAP-8SOAT_tc-fiapeats-ms-produto
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-
   verify-aws:
     needs: sonarqube
     runs-on: ubuntu-latest
@@ -274,7 +272,7 @@ jobs:
             kubectl set image deployment/fiapeats-api-deployment fiapeats-api-container=$IMAGE_REPO:$VERSION
           fi
 
-  # Job para deploy no ambiente de desenvolvimento
+  # Job para deploy no ambiente de desenvolvimento, caso a branch seja a develop
   deploy-develop:
     needs: publish-image
     runs-on: ubuntu-latest
@@ -344,7 +342,7 @@ jobs:
           kubectl rollout status deployment/fiapeats-api-deployment -n default --timeout=5m
           kubectl get pods -n default    
 
-  # Job para deploy no ambiente de produção
+  # Job para deploy no ambiente de produção, caso a branch seja a main
   deploy-production:
     needs: publish-image
     runs-on: ubuntu-latest
