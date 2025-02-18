@@ -252,28 +252,13 @@ jobs:
           
           echo "Fazendo push da imagem $IMAGE_REPO:$VERSION..."
           docker push $IMAGE_REPO:$VERSION
-          
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-          echo "Push da tag 'latest' para produção."
-          docker push $IMAGE_REPO:latest
-          fi
 
       - name: Atualizar imagem do Deployment no Kubernetes
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Versão detectada: $VERSION"
           IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
-          
-          # Determinar se o deploy é de produção
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "Deploy no ambiente de produção. Atualizando com a imagem 'latest'..."
-            docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
-            docker push $IMAGE_REPO:latest
-            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:latest -n fiapeats-hk
-          else
-            echo "Deploy no ambiente de desenvolvimento. Atualizando com a imagem versionada..."
-            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:$VERSION -n fiapeats-hk
-          fi
+          kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:$VERSION -n fiapeats-hk
 
   deploy-production:
     needs: publish-image
