@@ -313,7 +313,6 @@ jobs:
           echo "Fazendo login no ECR da conta ${AWS_ACCOUNT_ID}..."
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com
 
-
       - name: Baixar a imagem do ECR
         run: |
           IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
