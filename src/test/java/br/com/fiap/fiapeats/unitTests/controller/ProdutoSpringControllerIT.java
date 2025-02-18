@@ -51,7 +51,7 @@ class ProdutoSpringControllerIT {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .when()
-                    .post("/fiapeats/produto")
+                    .post("/msproduto/produto")
                     .then()
                     .statusCode(HttpStatus.CREATED.value())
                     .body(matchesJsonSchemaInClasspath("schemas/criarProdutoResponseSchema.json"));
@@ -65,7 +65,7 @@ class ProdutoSpringControllerIT {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .when()
-                    .post("/fiapeats/produto")
+                    .post("/msproduto/produto")
                     .then()
                     .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
                     .log().all()
@@ -80,7 +80,7 @@ class ProdutoSpringControllerIT {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .when()
-                    .post("/fiapeats/produto")
+                    .post("/msproduto/produto")
                     .then()
                     .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value());
         }
@@ -98,7 +98,7 @@ class ProdutoSpringControllerIT {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .when()
-                    .put("/fiapeats/produto/" + id)
+                    .put("/msproduto/produto/" + id)
                     .then()
                     .statusCode(HttpStatus.OK.value());
         }
@@ -112,7 +112,7 @@ class ProdutoSpringControllerIT {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .when()
-                    .put("/fiapeats/produto/" + id)
+                    .put("/msproduto/produto/" + id)
                     .then()
                     .statusCode(HttpStatus.NOT_FOUND.value());
         }
@@ -127,7 +127,7 @@ class ProdutoSpringControllerIT {
 
             given()
                     .when()
-                    .delete("/fiapeats/produto/" + id)
+                    .delete("/msproduto/produto/" + id)
                     .then()
                     .statusCode(HttpStatus.NO_CONTENT.value());
         }
@@ -138,7 +138,7 @@ class ProdutoSpringControllerIT {
 
             given()
                     .when()
-                    .delete("/fiapeats/produto/" + id)
+                    .delete("/msproduto/produto/" + id)
                     .then()
                     .statusCode(HttpStatus.NOT_FOUND.value());
         }
@@ -151,7 +151,7 @@ class ProdutoSpringControllerIT {
         void listarTodosProdutosComSucesso() {
             given()
                     .when()
-                    .get("/fiapeats/produto")
+                    .get("/msproduto/produto")
                     .then()
                     .statusCode(HttpStatus.OK.value());
         }
@@ -160,7 +160,7 @@ class ProdutoSpringControllerIT {
         void listarProdutosPorCategoriaComSucesso() {
             given()
                     .when()
-                    .get("/fiapeats/produto/categoria/Drink")
+                    .get("/msproduto/produto/categoria/Drink")
                     .then()
                     .statusCode(HttpStatus.OK.value());
         }
