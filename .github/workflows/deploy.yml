@@ -243,17 +243,15 @@ jobs:
 
       - name: Push da imagem para o Amazon ECR
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
+          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
+          
+          echo "Fazendo push da imagem $IMAGE_REPO:$VERSION..."
           docker push $IMAGE_REPO:$VERSION
           
-          # Tag e push para latest apenas para produção
-          if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "Fazendo merge na latest"
-            docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
-            docker push $IMAGE_REPO:latest
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          echo "Push da tag 'latest' para produção."
+          docker push $IMAGE_REPO:latest
           fi
-
 
       - name: Atualizar imagem do Deployment no Kubernetes
         run: |
