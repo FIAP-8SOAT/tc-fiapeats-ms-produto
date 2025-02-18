@@ -283,7 +283,6 @@ jobs:
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v3
-
       - name: Instalar kubectl
         uses: azure/setup-kubectl@v2.0
         with:
@@ -314,36 +313,35 @@ jobs:
           echo "Fazendo login no ECR da conta ${AWS_ACCOUNT_ID}..."
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com
 
-
       - name: Baixar a imagem do ECR
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
           echo "Imagem: $IMAGE_REPO:$VERSION"
           docker pull "${IMAGE_REPO}:${VERSION}"
 
       - name: Substituir a versão da imagem no deployment.yaml
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
           VERSION=${{ env.VERSION }}
           sed -i "s|image: .*|image: $IMAGE_REPO:$VERSION|" kubernetes/deployment.yaml
 
       - name: Deploy no ambiente de desenvolvimento
         run: |
           kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/ingress.yaml
-          kubectl apply -f kubernetes/service.yaml
-          kubectl apply -f kubernetes/configMap.yaml
-          kubectl apply -f kubernetes/dashboard.yaml
-          kubectl apply -f kubernetes/hpa.yaml
-          kubectl apply -f kubernetes/metrics.yaml
-          kubectl apply -f kubernetes/secrets.yaml
-          kubectl apply -f kubernetes/service_eks.yaml
-          kubectl apply -f kubernetes/userAdmin.yaml
+        #kubectl apply -f kubernetes/ingress.yaml
+          #kubectl apply -f kubernetes/service.yaml
+          #kubectl apply -f kubernetes/configMap.yaml
+          #kubectl apply -f kubernetes/dashboard.yaml
+          #kubectl apply -f kubernetes/hpa.yaml
+          #kubectl apply -f kubernetes/metrics.yaml
+          #kubectl apply -f kubernetes/secrets.yaml
+          #kubectl apply -f kubernetes/service_eks.yaml
+          #kubectl apply -f kubernetes/userAdmin.yaml
 
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
-          kubectl get pods -n default    
+          kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
+          kubectl get pods -n fiapeats-hk     
 
   # Job para deploy no ambiente de produção, caso a branch seja a main
   deploy-production:
@@ -381,13 +379,13 @@ jobs:
 
       - name: Baixar a imagem do ECR
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto:latest"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
           docker pull $IMAGE_REPO
 
 
       - name: Substituir a versão da imagem no deployment.yaml
         run: |
-            IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto:latest"
+            IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
             sed -i "s|image: .*|image: $IMAGE_REPO|" kubernetes/deployment.yaml
           
 
@@ -405,5 +403,5 @@ jobs:
           kubectl apply -f kubernetes/userAdmin.yaml
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
-          kubectl get pods -n default
+          kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
+          kubectl get pods -n fiapeats-hk
