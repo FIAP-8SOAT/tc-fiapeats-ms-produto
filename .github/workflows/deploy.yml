@@ -189,7 +189,7 @@ jobs:
           aws ecr create-repository --repository-name fiapeats-produto --region us-east-1
 
   publish-image:
-    needs: verify-aws
+    # needs: verify-aws
     runs-on: ubuntu-latest
     steps:
       - name: Baixar código do repositório
@@ -266,10 +266,10 @@ jobs:
             echo "Deploy no ambiente de produção. Atualizando com a imagem 'latest'..."
             docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
             docker push $IMAGE_REPO:latest
-            kubectl set image deployment/fiapeats-produto-deployment fiapeats-produto-container=$IMAGE_REPO:latest
+            kubectl set image deployment/ms-produto-deployment fiapeats-produto-container=$IMAGE_REPO:latest
           else
             echo "Deploy no ambiente de desenvolvimento. Atualizando com a imagem versionada..."
-            kubectl set image deployment/fiapeats-produto-deployment fiapeats-produto-container=$IMAGE_REPO:$VERSION
+            kubectl set image deployment/ms-produto-deployment fiapeats-produto-container=$IMAGE_REPO:$VERSION
           fi
 
   # Job para deploy no ambiente de desenvolvimento, caso a branch seja a develop
@@ -339,7 +339,7 @@ jobs:
 
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/fiapeats-produto-deployment -n default --timeout=5m
+          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
           kubectl get pods -n default    
 
   # Job para deploy no ambiente de produção, caso a branch seja a main
@@ -402,5 +402,5 @@ jobs:
           kubectl apply -f kubernetes/userAdmin.yaml
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/fiapeats-produto-deployment -n default --timeout=5m
+          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
           kubectl get pods -n default
