@@ -243,6 +243,11 @@ jobs:
 
       - name: Push da imagem para o Amazon ECR
         run: |
+          
+          # Captura a versão do projeto a partir do Maven
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Versão detectada: $VERSION"
+          
           IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
           
           echo "Fazendo push da imagem $IMAGE_REPO:$VERSION..."
