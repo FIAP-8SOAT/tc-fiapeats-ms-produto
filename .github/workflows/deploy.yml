@@ -315,13 +315,13 @@ jobs:
 
       - name: Baixar a imagem do ECR
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
           echo "Imagem: $IMAGE_REPO:$VERSION"
           docker pull "${IMAGE_REPO}:${VERSION}"
 
       - name: Substituir a versão da imagem no deployment.yaml
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
           VERSION=${{ env.VERSION }}
           sed -i "s|image: .*|image: $IMAGE_REPO:$VERSION|" kubernetes/deployment.yaml
 
@@ -379,13 +379,13 @@ jobs:
 
       - name: Baixar a imagem do ECR
         run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto:latest"
+          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
           docker pull $IMAGE_REPO
 
 
       - name: Substituir a versão da imagem no deployment.yaml
         run: |
-            IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto:latest"
+            IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
             sed -i "s|image: .*|image: $IMAGE_REPO|" kubernetes/deployment.yaml
           
 
