@@ -244,7 +244,7 @@ jobs:
       - name: Push da imagem para o Amazon ECR
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
+          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
           docker push $IMAGE_REPO:$VERSION
           
           # Tag e push para latest apenas para produção
@@ -259,7 +259,7 @@ jobs:
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "Versão detectada: $VERSION"
-          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ms-produto"
+          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-produto"
           
           # Determinar se o deploy é de produção
           if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
