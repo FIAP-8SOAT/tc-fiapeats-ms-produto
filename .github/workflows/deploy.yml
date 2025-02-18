@@ -340,8 +340,8 @@ jobs:
 
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
-          kubectl get pods -n default    
+          kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
+          kubectl get pods -n fiapeats-hk     
 
   # Job para deploy no ambiente de produção, caso a branch seja a main
   deploy-production:
@@ -403,5 +403,5 @@ jobs:
           kubectl apply -f kubernetes/userAdmin.yaml
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/ms-produto-deployment -n default --timeout=5m
-          kubectl get pods -n default
+          kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
+          kubectl get pods -n fiapeats-hk
