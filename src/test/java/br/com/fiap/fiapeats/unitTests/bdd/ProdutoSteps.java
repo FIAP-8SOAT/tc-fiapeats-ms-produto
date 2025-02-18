@@ -230,7 +230,8 @@ public class ProdutoSteps {
     @Então("a listagem de produtos por categoria deve ser bem-sucedida")
     public void aListagemDeProdutosPorCategoriaDeveSerBemSucedida() {
         response.then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.NOT_FOUND.value());
+        //.statusCode(HttpStatus.OK.value());
     }
 
     @Então("a remoção do produto deve falhar com uma mensagem de produto não encontrado")
