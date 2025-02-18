@@ -283,7 +283,6 @@ jobs:
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v3
-
       - name: Instalar kubectl
         uses: azure/setup-kubectl@v2.0
         with:
