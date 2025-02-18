@@ -266,10 +266,10 @@ jobs:
             echo "Deploy no ambiente de produção. Atualizando com a imagem 'latest'..."
             docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
             docker push $IMAGE_REPO:latest
-            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:latest
+            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:latest -n fiapeats-hk
           else
             echo "Deploy no ambiente de desenvolvimento. Atualizando com a imagem versionada..."
-            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:$VERSION
+            kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:$VERSION -n fiapeats-hk
           fi
 
   # Job para deploy no ambiente de desenvolvimento, caso a branch seja a develop
