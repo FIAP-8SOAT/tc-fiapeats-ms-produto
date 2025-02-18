@@ -1,5 +1,5 @@
 // URL
-const apiUrl = 'http://localhost:8080/fiapeats/produto';
+const apiUrl = 'http://localhost:8080/msproduto/produto';
 
 async function getProdutos() {
   try {
