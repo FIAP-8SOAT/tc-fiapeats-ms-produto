@@ -275,11 +275,9 @@ jobs:
             kubectl set image deployment/ms-produto-deployment ms-produto-container=$IMAGE_REPO:$VERSION -n fiapeats-hk
           fi
 
-  # Job para deploy no ambiente de desenvolvimento, caso a branch seja a develop
-  deploy-develop:
+  deploy-production:
     needs: publish-image
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v3
@@ -334,65 +332,3 @@ jobs:
           kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
           kubectl get pods -n fiapeats-hk     
 
-  # Job para deploy no ambiente de produção, caso a branch seja a main
-  deploy-production:
-    needs: publish-image
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Baixar código do repositório
-        uses: actions/checkout@v3
-
-      - name: Instalar kubectl
-        uses: azure/setup-kubectl@v2.0
-        with:
-          version: 'v1.24.0'
-
-      - name: Configurar credenciais AWS
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Atualizar configuração do Kubernetes
-        run: |
-          aws eks update-kubeconfig --name eks-fiapeats-cluster --region us-east-1
-          kubectl cluster-info
-
-      - name: Logar no Amazon ECR
-        run: |
-          AWS_REGION="us-east-1"
-          AWS_ACCOUNT_ID=390403893106
-          echo "Fazendo login no ECR da conta ${AWS_ACCOUNT_ID}..."
-          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com
-
-
-      - name: Baixar a imagem do ECR
-        run: |
-          IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
-          docker pull $IMAGE_REPO
-
-
-      - name: Substituir a versão da imagem no deployment.yaml
-        run: |
-            IMAGE_REPO="390403893106.dkr.ecr.us-east-1.amazonaws.com/ms-produto:latest"
-            sed -i "s|image: .*|image: $IMAGE_REPO|" kubernetes/deployment.yaml
-          
-
-      - name: Deploy no ambiente de produção
-        run: |
-          kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/ingress.yaml
-          kubectl apply -f kubernetes/service.yaml
-          kubectl apply -f kubernetes/configMap.yaml
-          kubectl apply -f kubernetes/dashboard.yaml
-          kubectl apply -f kubernetes/hpa.yaml
-          kubectl apply -f kubernetes/metrics.yaml
-          kubectl apply -f kubernetes/secrets.yaml
-          kubectl apply -f kubernetes/service_eks.yaml
-          kubectl apply -f kubernetes/userAdmin.yaml
-      - name: Health Check após Deploy
-        run: |
-          kubectl rollout status deployment/ms-produto-deployment -n fiapeats-hk  --timeout=5m
-          kubectl get pods -n fiapeats-hk
