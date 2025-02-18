@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: fiapeats-api-ingress
+  name: fiapeats-api-produto-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: fiapeatsapi
+    - host: fiapeatsapiproduto
       http:
         paths:
-          - path: /fiapeats
+          - path: /msproduto
             pathType: Prefix
             backend:
               service:
