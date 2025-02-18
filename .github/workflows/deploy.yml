@@ -328,15 +328,15 @@ jobs:
       - name: Deploy no ambiente de desenvolvimento
         run: |
           kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/ingress.yaml
-          kubectl apply -f kubernetes/service.yaml
-          kubectl apply -f kubernetes/configMap.yaml
-          kubectl apply -f kubernetes/dashboard.yaml
-          kubectl apply -f kubernetes/hpa.yaml
-          kubectl apply -f kubernetes/metrics.yaml
-          kubectl apply -f kubernetes/secrets.yaml
-          kubectl apply -f kubernetes/service_eks.yaml
-          kubectl apply -f kubernetes/userAdmin.yaml
+        #kubectl apply -f kubernetes/ingress.yaml
+          #kubectl apply -f kubernetes/service.yaml
+          #kubectl apply -f kubernetes/configMap.yaml
+          #kubectl apply -f kubernetes/dashboard.yaml
+          #kubectl apply -f kubernetes/hpa.yaml
+          #kubectl apply -f kubernetes/metrics.yaml
+          #kubectl apply -f kubernetes/secrets.yaml
+          #kubectl apply -f kubernetes/service_eks.yaml
+          #kubectl apply -f kubernetes/userAdmin.yaml
 
       - name: Health Check após Deploy
         run: |
